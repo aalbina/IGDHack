@@ -12,6 +12,7 @@ public class controllerComm : MonoBehaviour
     bool on;
     bool forward;
     bool init=false;
+    public string comPortName;
     public bool isForward(){
         return this.forward;
     }
@@ -34,7 +35,7 @@ public class controllerComm : MonoBehaviour
     {
         this.gasValue=0;
         this.steeringValue=0;
-        serialPort.PortName="/dev/ttyUSB0";
+        serialPort.PortName=this.comPortName;
         serialPort.BaudRate=115200;
         serialPort.Open();
         for(int i=0;i<20;i++){
