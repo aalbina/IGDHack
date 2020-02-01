@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Ship : MonoBehaviour
 {
+    public controllerComm controller;
     public Rigidbody rb;
 
     public float forwardForce = 0.1f;
@@ -28,10 +29,11 @@ public class Ship : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.W) && accelerationValue < 100)
-        {
-            this.accelerationValue += 1;
-        }
+        // if (Input.GetKey(KeyCode.W) && accelerationValue < 100)
+        // {
+        //     this.accelerationValue += 1;
+        // }
+        this.accelerationValue=controller.getGasValue();
         if (Input.GetKey(KeyCode.S) && accelerationValue >0)
         {
             this.accelerationValue -= 1;

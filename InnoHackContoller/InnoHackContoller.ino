@@ -28,8 +28,8 @@ void dmpDataReady() {
 }
 
 // Module connection pins (Digital Pins)
-#define CLK 4
-#define DIO 3
+#define CLK 5
+#define DIO 4
 TM1637Display display(CLK, DIO);
 const byte minus_seg[1]={SEG_G};
 void drawGas(byte gas,bool reverse){
@@ -66,8 +66,8 @@ int angle=0;
 String data;
 bool isFuelLow=true;
 byte fuelLevel=0;
-//unsigned long del=0;
-//unsigned long update_delay=10;//ms
+unsigned long del=0;
+unsigned long update_delay=40;//ms
 
 
 void setup() {
@@ -83,20 +83,20 @@ void setup() {
   //add reverse read before;
   drawGas(100,false);
   
-  pinMode(LED_PIN, OUTPUT); 
+  pinMode(LED_PIN, OUTPUT);
   
   Wire.begin();
   Wire.setClock(400000);
-  Serial.println(F("Initializing I2C devices..."));
+  //Serial.println(F("Initializing I2C devices..."));
   mpu.initialize();
   pinMode(INTERRUPT_PIN, INPUT);
   
   // verify connection
-  Serial.println(F("Testing device connections..."));
+  //Serial.println(F("Testing device connections..."));
   Serial.println(mpu.testConnection() ? F("MPU6050 connection successful") : F("MPU6050 connection failed"));
 
   // load and configure the DMP
-  Serial.println(F("Initializing DMP..."));
+  //Serial.println(F("Initializing DMP..."));
   devStatus = mpu.dmpInitialize();
 
   // supply your own gyro offsets here, scaled for min sensitivity
@@ -112,18 +112,18 @@ void setup() {
       mpu.CalibrateGyro(6);
       mpu.PrintActiveOffsets();
       // turn on the DMP, now that it's ready
-      Serial.println(F("Enabling DMP..."));
+      //Serial.println(F("Enabling DMP..."));
       mpu.setDMPEnabled(true);
 
       // enable Arduino interrupt detection
-      Serial.print(F("Enabling interrupt detection (Arduino external interrupt "));
+      /*Serial.print(F("Enabling interrupt detection (Arduino external interrupt "));
       Serial.print(digitalPinToInterrupt(INTERRUPT_PIN));
-      Serial.println(F(")..."));
+      Serial.println(F(")..."));*/
       attachInterrupt(digitalPinToInterrupt(INTERRUPT_PIN), dmpDataReady, RISING);
       mpuIntStatus = mpu.getIntStatus();
 
       // set our DMP Ready flag so the main loop() function knows it's okay to use it
-      Serial.println(F("DMP ready! Waiting for first interrupt..."));
+      //Serial.println(F("DMP ready! Waiting for first interrupt..."));
       dmpReady = true;
 
       // get expected DMP packet size for later comparison
@@ -159,9 +159,7 @@ void loop() {
         angle=int(round(ypr[0] * 180/M_PI));
         angle=constrain(angle,-65,-5);
         angle=map(angle,-65,-5,0,100);
-        drawGas(angle,false);
-        Serial.print("g:");
-        Serial.println(angle);
+        //drawGas(angle,false);
 
         //reading management
         if(Serial.available()>0){
@@ -184,8 +182,11 @@ void loop() {
              //add lcd segment
           }
         }
-        //while((millis()-del)<update_delay){}
-        //del=millis();
+        if((millis()-del)>update_delay){
+          Serial.print("g:");
+          Serial.println(angle);
+          del=millis();
+        }
     }
 
     // reset interrupt flag and get INT_STATUS byte

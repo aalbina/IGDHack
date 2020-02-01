@@ -11,6 +11,7 @@ public class controllerComm : MonoBehaviour
     int steeringValue;
     bool on;
     bool forward;
+    bool init=false;
     public bool isForward(){
         return this.forward;
     }
@@ -35,30 +36,31 @@ public class controllerComm : MonoBehaviour
         this.steeringValue=0;
         serialPort.PortName="/dev/ttyUSB0";
         serialPort.BaudRate=115200;
-        for(int i=0;i<15;i++){
+        serialPort.Open();
+        for(int i=0;i<20;i++){
             serialPort.ReadTo("\n");
         }
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         data=serialPort.ReadTo("\n");
-        string type=data.Substring(0,2);
+        //string type=data.Substring(0,2);
         string value=data.Substring(2);
         int number=int.Parse(value);
-        if(type.Contains("g")){
+        if(data[0]=='g'){
             this.gasValue=number;
         }
-        else if(type.Contains("s")){
+        else if(data[0]=='s'){
             this.steeringValue=number;
         }
-        else if(type.Contains("e")){
+        else if(data[0]=='e'){
             this.on=(number==1);
         }
-        else if(type.Contains("r")){//if reverse is 0 - move forward
+        else if(data[0]=='r'){//if reverse is 0 - move forward
             this.forward=(number==0);
-        }
+        }        
     }
 
     public void setFuelLevel(int level){
