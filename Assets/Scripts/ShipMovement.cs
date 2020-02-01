@@ -10,6 +10,7 @@ public class ShipMovement : MonoBehaviour
     public Vector2 movement;
     public Ship ship;
 
+    public float maxVelocityConstraint;
     // Start is called before the first frame update
     void Start()
     {
@@ -45,8 +46,13 @@ public class ShipMovement : MonoBehaviour
             rb.velocity = rb.velocity * 0.92f;
         }
         //Ускоряемся на значение акселерации.
-        
-        rb.AddForce(rb.transform.forward * ship.GetAccelerationValue()* speedCoef * Time.deltaTime, ForceMode.Force);
+        if(rb.velocity.z<maxVelocityConstraint){
+            rb.AddForce(rb.transform.forward * ship.GetAccelerationValue()* speedCoef * Time.deltaTime, ForceMode.Force);
+        }
+        else{
+            float vel=maxVelocityConstraint/rb.velocity.z;
+            rb.velocity=new Vector3(0,0,rb.velocity.z*vel);
+        }
     }
 
 }
