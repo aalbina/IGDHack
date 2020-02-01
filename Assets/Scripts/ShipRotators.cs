@@ -10,7 +10,7 @@ public class ShipRotators : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        accel = 10 * accelerationValue;
+        accel = 10 * ship.accelerationValue;
         transform.Rotate(0, accel * Time.deltaTime, 0);
     }
 }
