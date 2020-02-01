@@ -44,8 +44,13 @@ void setlcdlevel(byte level){
     lcd.write((unsigned char)0);
   }
 }
+byte red_ind[3]={240,20,20};
+byte green_ind[3]={40,120,40};
+
 int angle=0;
 String data;
+bool isFuelLow=true;
+byte fuelLevel=0;
 //unsigned long del=0;
 //unsigned long update_delay=10;//ms
 
@@ -56,7 +61,7 @@ void setup() {
   lcd.createChar(0, black_square);
 
   setlcdlevel(6);
-  lcd.setRGB(120, 120, 0);
+  lcd.setRGB(40, 120, 40);
   pinMode(LED_PIN, OUTPUT); 
   Wire.begin();
   Wire.setClock(400000);
@@ -124,15 +129,39 @@ void loop() {
         }
         //other program here
         //Serial.println();
-
+        
+        //gas angle management
         angle=int(round(ypr[0] * 180/M_PI));
-        //angle=constrain(angle,-60,0);
-        //angle=map(angle,-60,0,0,100);
+        angle=constrain(angle,-65,-5);
+        angle=map(angle,-65,-5,0,100);
         Serial.print("g:");
         Serial.println(angle);
-        //add reverse read
-        //add enable read
         
+        //add reverse read
+        
+        //add enable read
+
+        //reading management
+        if(Serial.available()>0){
+          data=Serial.readStringUntil("\n");
+          String type=data.substring(0,2);
+          String value=data.substring(2);
+          int number=value.toInt();
+          if(type.charAt(0)=='f'){
+             //fuel management 
+             if(number<30){
+              isFuelLow=true;
+              lcd.setRGB(red_ind[0], red_ind[1], red_ind[2]);
+             }
+             else if(number>31){
+              isFuelLow=false;
+              lcd.setRGB(green_ind[0], green_ind[1], green_ind[2]);
+             }
+             fuelLevel=byte(map(number,0,100,0,16));             
+             setlcdlevel(fuelLevel);
+             //add lcd segment
+          }
+        }
         //while((millis()-del)<update_delay){}
         //del=millis();
     }
