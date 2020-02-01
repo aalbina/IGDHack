@@ -1305,7 +1305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b24f26acc1c0d49e9a6c56e8e043b15d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedCoef: 10
+  speedCoef: 5
   maneuvreSpeed: 100
   rb: {fileID: 0}
   movement: {x: 0, y: 0}
