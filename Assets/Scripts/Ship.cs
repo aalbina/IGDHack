@@ -14,30 +14,10 @@ public class Ship : MonoBehaviour
     public Detail detail;
     public Station station;
 
+
     // Update is called once per frame
     void FixedUpdate()
     {
-        if ( Input.GetKey("d") )
-		{
-            rb.AddForce(transform.right * sidewayForce * Time.fixedDeltaTime);
-            accelerationValue = 1;
-        }
-        else if ( Input.GetKey("a") )
-		{
-            rb.AddForce(-transform.right * sidewayForce * Time.fixedDeltaTime);
-            accelerationValue = 1;
-        }
-        else if (Input.GetKey("s"))
-        {
-            rb.AddForce(-transform.forward * forwardForce * Time.fixedDeltaTime);
-            accelerationValue = 1;
-        }
-        else if (Input.GetKey("w"))
-        {
-            rb.AddForce(transform.forward * forwardForce * Time.fixedDeltaTime);
-            accelerationValue = 1;
-        }
-
         if (this.IsDetailGrabbed())
 		{
             this.detail.transform.position = this.transform.position + this.transform.forward * 2;
