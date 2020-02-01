@@ -128,7 +128,10 @@ void loop() {
         angle=int(round(ypr[0] * 180/M_PI));
         //angle=constrain(angle,-60,0);
         //angle=map(angle,-60,0,0,100);
+        Serial.print("g:");
         Serial.println(angle);
+        //add reverse read
+        //add enable read
         
         //while((millis()-del)<update_delay){}
         //del=millis();
