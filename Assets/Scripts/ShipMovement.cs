@@ -4,49 +4,52 @@ using UnityEngine;
 
 public class ShipMovement : MonoBehaviour
 {
-    public float speed;
+    public float speedCoef;
+    public float maneuvreSpeed;
     public Rigidbody rb;
     public Vector2 movement;
+    public Ship ship;
 
-	// Start is called before the first frame update
-	void Start()
-	{
-    	rb = this.GetComponent<Rigidbody>();
-	}
-
-	// Update is called once per frame
-	void Update()
+    // Start is called before the first frame update
+    void Start()
     {
-   	 bool isKeyPressed = false;
-   	 if (Input.GetKey(KeyCode.W))
-   	 {
-   		 rb.AddForce( rb.transform.forward * speed * Time.deltaTime, ForceMode.Force);
-   		 //rb.velocity += rb.transform.forward * speed;
-   		 isKeyPressed = true;
-   	 }
-   	 if (Input.GetKey(KeyCode.S))
-   	 {
-   		 rb.AddForce( -rb.transform.forward * speed * Time.deltaTime, ForceMode.Force);
-   		 isKeyPressed = true;
-   	 }
-   	 // rotate
+        ship = this.GetComponent<Ship>();
+        rb = this.GetComponent<Rigidbody>();
+    }
 
-   	 if (Input.GetKey(KeyCode.D))
-   	 {
-   		 rb.transform.Rotate(0, 1, 0);//, Space.Self);
-   		 isKeyPressed = true;
-   	 }
-   	 if (Input.GetKey(KeyCode.A))
-   	 {
+    // Update is called once per frame
+    void Update()
+    { 
+        if (Input.GetKey(KeyCode.S))
+        {
+            rb.AddForce(-rb.transform.forward * maneuvreSpeed * Time.deltaTime, ForceMode.Force);
 
-   		 rb.transform.Rotate(0, -1, 0);//, Space.Self);
-   		 isKeyPressed = true;
-   	 }
+        }
+        // rotate
 
-   	 if(!isKeyPressed)  
-   	 {
-   		 rb.velocity = rb.velocity * 0;
-   	 }
+        if (Input.GetKey(KeyCode.D))
+        {
+            rb.transform.Rotate(0, 0.80f, 0);
+
+            rb.AddForce(rb.transform.right * maneuvreSpeed * Time.deltaTime, ForceMode.Force);
+     
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+
+            rb.transform.Rotate(0, -0.80f, 0);
+
+            rb.AddForce(-rb.transform.right * maneuvreSpeed * Time.deltaTime, ForceMode.Force);
+            
+
+        }
+
+        if (ship.GetAccelerationValue()== 0f)
+        {
+            rb.velocity = rb.velocity * 0.96f;
+        }
+        //Ускоряемся на значение акселерации.
+        rb.AddForce(rb.transform.forward * ship.GetAccelerationValue()* speedCoef * Time.deltaTime, ForceMode.Force);
     }
 
 }
