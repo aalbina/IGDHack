@@ -19,31 +19,46 @@ public class Ship : MonoBehaviour
     void FixedUpdate()
     {
         if (this.IsDetailGrabbed())
-		{
+        {
             this.detail.transform.position = this.transform.position + this.transform.forward * 2;
         }
+        this.fuel = this.fuel - (accelerationValue/5 * Time.deltaTime);
+        
+    }
 
-        Debug.Log(this.fuel);
-        this.fuel = this.fuel - (accelerationValue * Time.deltaTime) ;
-        Debug.Log(this.fuel);
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.W) && accelerationValue < 100)
+        {
+            this.accelerationValue += 1;
+        }
+        if (Input.GetKey(KeyCode.S) && accelerationValue >0)
+        {
+            this.accelerationValue -= 1;
+        }
     }
 
     public void Refuel(Coffee coffee)
-	{
+    {
         fuel += coffee.capacity;
-	}
+    }
 
     public void GrabbDetail(Detail detail)
-	{
+    {
         if (!this.detail)
-		{
+        {
             this.detail = detail;
             detail.transform.position = this.transform.position + this.transform.forward * 2;
         }
-	}
+    }
 
     public bool IsDetailGrabbed()
-	{
+    {
         return this.detail != null;
-	}
+    }
+
+    public float GetAccelerationValue()
+    {
+        return this.accelerationValue;
+    }
 }
