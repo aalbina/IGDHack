@@ -30,25 +30,22 @@ public class ShipMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             rb.transform.Rotate(0, 0.80f, 0);
-
             rb.AddForce(rb.transform.right * maneuvreSpeed * Time.deltaTime, ForceMode.Force);
      
         }
         if (Input.GetKey(KeyCode.A))
         {
-
             rb.transform.Rotate(0, -0.80f, 0);
-
             rb.AddForce(-rb.transform.right * maneuvreSpeed * Time.deltaTime, ForceMode.Force);
             
-
         }
 
-        if (ship.GetAccelerationValue()== 0f)
+        if (ship.GetAccelerationValue()< 5f)
         {
-            rb.velocity = rb.velocity * 0.96f;
+            rb.velocity = rb.velocity * 0.92f;
         }
         //Ускоряемся на значение акселерации.
+        
         rb.AddForce(rb.transform.forward * ship.GetAccelerationValue()* speedCoef * Time.deltaTime, ForceMode.Force);
     }
 

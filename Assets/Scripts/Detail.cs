@@ -7,7 +7,7 @@ public class Detail : MonoBehaviour
     public string type;
     public Ship ship;
 
-    float accelx;
+    float accel;
     bool grabbed = false;
 
     // Update is called once per frame
@@ -15,8 +15,8 @@ public class Detail : MonoBehaviour
     {
         if (!this.grabbed)
 		{
-            accelx = 10;
-            transform.Rotate(accelx * Time.deltaTime, accelx * Time.deltaTime, accelx * Time.deltaTime);
+            accel = 10;
+            transform.Rotate(accel * Time.deltaTime, 0, 0);
         }
     }
 
