@@ -1,6 +1,8 @@
 #include "I2Cdev.h"
 #include "MPU6050_6Axis_MotionApps20.h"
 #include "math.h"
+#include "rgb_lcd.h"
+
 MPU6050 mpu;
 #define INTERRUPT_PIN 2  // use pin 2 on Arduino Uno & most boards
 #define LED_PIN 13 // (Arduino is 13, Teensy is 11, Teensy++ is 6)
@@ -22,14 +24,39 @@ void dmpDataReady() {
     mpuInterrupt = true;
 }
 
-
+rgb_lcd lcd;
+byte black_square[8] = {
+    0b11111,
+    0b11111,
+    0b11111,
+    0b11111,
+    0b11111,
+    0b11111,
+    0b11111,
+    0b11111
+};
+void setlcdlevel(byte level){
+  lcd.clear();  
+  for(byte i=0;i<level;i++){
+    lcd.setCursor(i,0);
+    lcd.write((unsigned char)0);
+    lcd.setCursor(i,1);
+    lcd.write((unsigned char)0);
+  }
+}
 int angle=0;
 String data;
 //unsigned long del=0;
 //unsigned long update_delay=10;//ms
 
+
 void setup() {
   Serial.begin(115200);
+  lcd.begin(16, 2);
+  lcd.createChar(0, black_square);
+
+  setlcdlevel(6);
+  lcd.setRGB(120, 120, 0);
   pinMode(LED_PIN, OUTPUT); 
   Wire.begin();
   Wire.setClock(400000);
