@@ -7,10 +7,11 @@ public class Ship : MonoBehaviour
     public controllerComm controller;
     public Rigidbody rb;
 
-    public float forwardForce = 0.1f;
-    public float sidewayForce = 1f;
+    public bool isControllerEnabled;
 
-    public float fuel = 500f;
+    [HideInInspector] public float fuel = 160f;
+    private float fuelMax = 160f;
+    private float fuelForDisplay = 0f;
     public float accelerationValue = 0;
     public Detail detail;
     public Station station;
@@ -23,17 +24,37 @@ public class Ship : MonoBehaviour
         {
             this.detail.transform.position = this.transform.position + this.transform.forward * 2;
         }
-        this.fuel = this.fuel - (accelerationValue/5 * Time.deltaTime);
-        //controller.setFuelLevel((int)this.fuel/10);
+
     }
 
     void Update()
     {
-        // if (Input.GetKey(KeyCode.W) && accelerationValue < 100)
-        // {
-        //     this.accelerationValue += 1;
-        // }
-        this.accelerationValue=controller.getGasValue();
+        if (isControllerEnabled)
+        {
+            this.accelerationValue = controller.getGasValue();
+
+        }
+        else
+        {
+            if (Input.GetKey(KeyCode.W) && accelerationValue < 100)
+            {
+                this.accelerationValue += 1;
+            }
+        }
+
+        this.fuel = this.fuel - (accelerationValue / 10 * Time.deltaTime);
+        if (isControllerEnabled)
+        {
+            int newFuelForDisplay = (int)fuel / 10;
+            if (fuelForDisplay != newFuelForDisplay && newFuelForDisplay >= 0) ;
+            {
+                controller.setFuelLevel(newFuelForDisplay);
+            }
+        }
+    
+    
+    
+
         if (Input.GetKey(KeyCode.S) && accelerationValue >0)
         {
             this.accelerationValue -= 1;
@@ -43,6 +64,10 @@ public class Ship : MonoBehaviour
     public void Refuel(Coffee coffee)
     {
         fuel += coffee.capacity;
+        if (fuel > fuelMax)
+        {
+            fuel = fuelMax;
+        }
     }
 
     public void GrabbDetail(Detail detail)
