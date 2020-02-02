@@ -40,6 +40,7 @@ public class Ship : MonoBehaviour
         if (isControllerEnabled)
         {
             this.accelerationValue = controller.getGasValue();
+            
 
         }
         else

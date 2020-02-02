@@ -221,7 +221,7 @@ void loop() {
             digitalWrite(rgbled[1],HIGH);
             digitalWrite(rgbled[2],LOW);
           }
-          int sum=digitalRead(stbtn[0])-digitalRead(stbtn[1]);
+          int sum=digitalRead(stbtn[1])-digitalRead(stbtn[0]);
           if(sum!=0)
             stval=constrain(stval+(5*sum),0,10);
           else
