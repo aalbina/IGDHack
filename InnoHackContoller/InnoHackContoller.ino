@@ -63,16 +63,23 @@ void setlcdlevel(byte level){
 }
 byte red_ind[3]={240,20,20};
 byte green_ind[3]={40,120,40};
+// BGR
+byte rgbled[3]={8,9,10};
 
 int angle=0;
 String data;
 bool isFuelLow=true;
 byte fuelLevel=0;
 unsigned long del=0;
-unsigned long update_delay=40;//ms
+unsigned long update_delay=35;//ms
 
 
 void setup() {
+  for(byte i=0;i<3;i++)
+    pinMode(rgbled,OUTPUT);
+  digitalWrite(rgbled[2],HIGH);
+
+  
   Serial.begin(115200);
 
   lcd.begin(16, 2);
@@ -83,11 +90,11 @@ void setup() {
   
   display.setBrightness(0x0f);
   //add reverse read before;
-  drawGas(100,false);
+  //drawGas(100,false);
   
   pinMode(LED_PIN, OUTPUT);
   pinMode(onOffPin, INPUT_PULLUP);
-  
+    
   Wire.begin();
   Wire.setClock(400000);
   //Serial.println(F("Initializing I2C devices..."));
@@ -141,12 +148,18 @@ void setup() {
       Serial.println(F(")"));
   }
   Serial.println("WAIT FOR START");
+  digitalWrite(rgbled[2],LOW);
+  digitalWrite(rgbled[0],HIGH);
+  while(digitalRead(onOffPin)==LOW){}
   while(digitalRead(onOffPin)==HIGH){
    if((millis()-del)>update_delay){
     Serial.println("e:0");
     del=millis();
    }
   }
+  digitalWrite(rgbled[0],LOW);
+  digitalWrite(rgbled[1],HIGH);
+
   Serial.println("e:1");
 }
 
@@ -188,7 +201,7 @@ void loop() {
               isFuelLow=false;
               lcd.setRGB(green_ind[0], green_ind[1], green_ind[2]);
              }
-             //fuelLevel=byte(map(number,0,100,0,16));             
+             fuelLevel=byte(number);             
              setlcdlevel(fuelLevel);
              //add lcd segment
           }
@@ -198,8 +211,12 @@ void loop() {
           Serial.println(angle);
           if(digitalRead(onOffPin)==HIGH){
             Serial.println("e:0");
+            digitalWrite(rgbled[2],HIGH);
+            digitalWrite(rgbled[1],LOW);
             while(digitalRead(onOffPin)==HIGH){}
             Serial.println("e:1");
+            digitalWrite(rgbled[1],HIGH);
+            digitalWrite(rgbled[2],LOW);
           }
           del=millis();
         }

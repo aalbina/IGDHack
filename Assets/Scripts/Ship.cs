@@ -10,13 +10,16 @@ public class Ship : MonoBehaviour
     public bool isControllerEnabled;
 
     [HideInInspector] public float fuel = 160f;
-    private float fuelMax = 160f;
+    private float fuelMax = 480f;
     private float fuelForDisplay = 0f;
     public float accelerationValue = 0;
     public Detail detail;
     public Station station;
 
-
+    void Start()
+    {
+        fuel=480f;    
+    }
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -45,9 +48,10 @@ public class Ship : MonoBehaviour
         this.fuel = this.fuel - (accelerationValue / 10 * Time.deltaTime);
         if (isControllerEnabled)
         {
-            int newFuelForDisplay = (int)fuel / 10;
-            if (fuelForDisplay != newFuelForDisplay && newFuelForDisplay >= 0) ;
+            int newFuelForDisplay = (int)fuel / 30;
+            if ((fuelForDisplay != newFuelForDisplay) && (newFuelForDisplay >= 0))
             {
+                fuelForDisplay=newFuelForDisplay;
                 controller.setFuelLevel(newFuelForDisplay);
             }
         }

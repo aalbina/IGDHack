@@ -1288,8 +1288,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 1579790197}
   rb: {fileID: 1037506940}
-  forwardForce: 500
-  sidewayForce: 100
+  isControllerEnabled: 1
   fuel: 500
   accelerationValue: 0
   detail: {fileID: 0}
@@ -1310,7 +1309,7 @@ MonoBehaviour:
   maneuvreSpeed: 100
   rb: {fileID: 0}
   movement: {x: 0, y: 0}
-  ship: {fileID: 0}
+  ship: {fileID: 1037506945}
   maxVelocityConstraint: 5
 --- !u!1001 &1043584899
 PrefabInstance:
@@ -1820,7 +1819,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11442534, guid: a65acf0cbf56b80419f74ebf0bc845f4, type: 3}
       propertyPath: portName
-      value: /dev/ttyUSB1
+      value: /dev/ttyUSB0
       objectReference: {fileID: 0}
     - target: {fileID: 11442534, guid: a65acf0cbf56b80419f74ebf0bc845f4, type: 3}
       propertyPath: baudRate
