@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class ShipMovement : MonoBehaviour
@@ -10,6 +11,8 @@ public class ShipMovement : MonoBehaviour
     public Vector2 movement;
     public Ship ship;
 
+    public controllerComm controllerComm;
+
     public float maxVelocityConstraint;
     // Start is called before the first frame update
     void Start()
@@ -19,10 +22,9 @@ public class ShipMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if (ship.fuel == 0)
-        {
+    void Update()    { 
+        bool isShipActive = controllerComm.isOn();
+        if(!isShipActive){
             rb.velocity = rb.velocity * 0.92f;
             return;
         }
@@ -32,18 +34,10 @@ public class ShipMovement : MonoBehaviour
 
         }
         // rotate
-
-        if (Input.GetKey(KeyCode.D))
-        {
-            rb.transform.Rotate(0, 1.4f, 0);
-            rb.AddForce(rb.transform.right * maneuvreSpeed * Time.deltaTime, ForceMode.Force);
-     
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            rb.transform.Rotate(0, -1.4f, 0);
-            rb.AddForce(-rb.transform.right * maneuvreSpeed * Time.deltaTime, ForceMode.Force);
-            
+        if(ship.isControllerEnabled){
+            SteeringWithController();
+        }else{
+            SteeringWithWasd();
         }
 
         if (ship.GetAccelerationValue()< 5f)
@@ -51,12 +45,36 @@ public class ShipMovement : MonoBehaviour
             rb.velocity = rb.velocity * 0.92f;
         }
         //Ускоряемся на значение акселерации.
-        if(rb.velocity.z<maxVelocityConstraint){
+        if(rb.velocity.magnitude < maxVelocityConstraint){
             rb.AddForce(rb.transform.forward * ship.GetAccelerationValue()* speedCoef * Time.deltaTime, ForceMode.Force);
         }
         else{
-            float vel=maxVelocityConstraint/rb.velocity.z;
-            rb.velocity=new Vector3(0,0,rb.velocity.z*vel);
+            float vel=maxVelocityConstraint/rb.velocity.magnitude;
+            rb.velocity*= vel;
+        }
+    }
+
+    private void SteeringWithController(){
+        if(controllerComm.getSteeringValue() == 0){
+            rb.transform.Rotate(0, -1f, 0);
+            rb.AddForce(-rb.transform.right * maneuvreSpeed * Time.deltaTime, ForceMode.Force);
+            return;
+        } 
+        if(controllerComm.getSteeringValue() == 10){
+            rb.transform.Rotate(0, 1f, 0);
+            rb.AddForce(rb.transform.right * maneuvreSpeed * Time.deltaTime, ForceMode.Force);
+        }
+    }
+
+        private void SteeringWithWasd(){
+        if(Input.GetKey(KeyCode.A)){
+            rb.transform.Rotate(0, -1f, 0);
+            rb.AddForce(-rb.transform.right * maneuvreSpeed * Time.deltaTime, ForceMode.Force);
+            return;
+        } 
+        if(Input.GetKey(KeyCode.D)){
+            rb.transform.Rotate(0, 1f, 0);
+            rb.AddForce(rb.transform.right * maneuvreSpeed * Time.deltaTime, ForceMode.Force);
         }
     }
 

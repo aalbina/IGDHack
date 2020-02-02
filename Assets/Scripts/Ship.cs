@@ -32,9 +32,8 @@ public class Ship : MonoBehaviour
 
     void Update()
     {
-        if(fuel <= 0)
-        {
-            fuel = 0;
+        bool isShipActive = controller.isOn();
+        if(!isShipActive){
             accelerationValue = 0;
             return;
         }
