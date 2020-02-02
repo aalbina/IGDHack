@@ -1430,6 +1430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1cb0cbdd252d0831bb03808d0eea31a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serialController: {fileID: 1858302282}
 --- !u!1 &1698010758
 GameObject:
   m_ObjectHideFlags: 0
@@ -1534,6 +1535,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f049b55d4ad54772920be5a114c7128, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1858302282 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 11442534, guid: a65acf0cbf56b80419f74ebf0bc845f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 2125001443}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bc5f48af2cffd747a079fe8c632e2c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1928801797
@@ -1817,5 +1830,9 @@ PrefabInstance:
       propertyPath: messageListener
       value: 
       objectReference: {fileID: 1579790194}
+    - target: {fileID: 11442534, guid: a65acf0cbf56b80419f74ebf0bc845f4, type: 3}
+      propertyPath: maxUnreadMessages
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a65acf0cbf56b80419f74ebf0bc845f4, type: 3}

@@ -27,6 +27,8 @@ void dmpDataReady() {
     mpuInterrupt = true;
 }
 
+byte onOffPin=3;
+
 // Module connection pins (Digital Pins)
 #define CLK 5
 #define DIO 4
@@ -84,6 +86,7 @@ void setup() {
   drawGas(100,false);
   
   pinMode(LED_PIN, OUTPUT);
+  pinMode(onOffPin, INPUT_PULLUP);
   
   Wire.begin();
   Wire.setClock(400000);
@@ -137,6 +140,14 @@ void setup() {
       Serial.print(devStatus);
       Serial.println(F(")"));
   }
+  Serial.println("WAIT FOR START");
+  while(digitalRead(onOffPin)==HIGH){
+   if((millis()-del)>update_delay){
+    Serial.println("e:0");
+    del=millis();
+   }
+  }
+  Serial.println("e:1");
 }
 
 void loop() {
@@ -169,15 +180,15 @@ void loop() {
           int number=value.toInt();
           if(type.charAt(0)=='f'){
              //fuel management 
-             if(number<30){
+             if(number<5){
               isFuelLow=true;
               lcd.setRGB(red_ind[0], red_ind[1], red_ind[2]);
              }
-             else if(number>31){
+             else if(number>=5){
               isFuelLow=false;
               lcd.setRGB(green_ind[0], green_ind[1], green_ind[2]);
              }
-             fuelLevel=byte(map(number,0,100,0,16));             
+             //fuelLevel=byte(map(number,0,100,0,16));             
              setlcdlevel(fuelLevel);
              //add lcd segment
           }
@@ -185,6 +196,11 @@ void loop() {
         if((millis()-del)>update_delay){
           Serial.print("g:");
           Serial.println(angle);
+          if(digitalRead(onOffPin)==HIGH){
+            Serial.println("e:0");
+            while(digitalRead(onOffPin)==HIGH){}
+            Serial.println("e:1");
+          }
           del=millis();
         }
     }

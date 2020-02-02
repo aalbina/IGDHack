@@ -24,7 +24,7 @@ public class Ship : MonoBehaviour
             this.detail.transform.position = this.transform.position + this.transform.forward * 2;
         }
         this.fuel = this.fuel - (accelerationValue/5 * Time.deltaTime);
-        
+        //controller.setFuelLevel((int)this.fuel/10);
     }
 
     void Update()
