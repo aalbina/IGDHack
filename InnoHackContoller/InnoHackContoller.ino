@@ -65,6 +65,9 @@ byte red_ind[3]={240,20,20};
 byte green_ind[3]={40,120,40};
 // BGR
 byte rgbled[3]={8,9,10};
+//steering buttons
+byte stbtn[2]={6,7};
+byte stval=5;
 
 int angle=0;
 String data;
@@ -76,7 +79,7 @@ unsigned long update_delay=35;//ms
 
 void setup() {
   for(byte i=0;i<3;i++)
-    pinMode(rgbled,OUTPUT);
+    pinMode(rgbled[i],OUTPUT);    
   digitalWrite(rgbled[2],HIGH);
 
   
@@ -218,6 +221,13 @@ void loop() {
             digitalWrite(rgbled[1],HIGH);
             digitalWrite(rgbled[2],LOW);
           }
+          int sum=digitalRead(stbtn[0])-digitalRead(stbtn[1]);
+          if(sum!=0)
+            stval=constrain(stval+(5*sum),0,10);
+          else
+            stval=5;
+          Serial.print("s:");
+          Serial.println(stval);
           del=millis();
         }
     }
