@@ -9,7 +9,7 @@ public class controllerComm : MonoBehaviour
     // Start is called before the first frame update
     public SerialController serialController;
     int gasValue;
-    int steeringValue;
+    int steeringValue = 5;
     bool on;
     bool forward;
     bool init=false;

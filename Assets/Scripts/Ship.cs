@@ -32,6 +32,11 @@ public class Ship : MonoBehaviour
 
     void Update()
     {
+        bool isShipActive = controller.isOn();
+        if(!isShipActive){
+            accelerationValue = 0;
+            return;
+        }
         if (isControllerEnabled)
         {
             this.accelerationValue = controller.getGasValue();
