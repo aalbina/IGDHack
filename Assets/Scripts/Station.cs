@@ -10,13 +10,13 @@ public class Station : MonoBehaviour
     public Coffee coffee1;
     public Coffee coffee2;
     public Coffee coffee3;
-
+    public string requiredDetailType;
     int maxDetails = 1;
 
 
     public void AttachDetail(Ship ship)
 	{
-        if (details.Count < maxDetails)
+        if (ship.detail && details.Count < maxDetails)
         {
             Detail detail = ship.detail;
             ship.detail = null;

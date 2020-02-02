@@ -10,6 +10,7 @@ public class ShipMovement : MonoBehaviour
     public Rigidbody rb;
     public Vector2 movement;
     public Ship ship;
+    private bool isShipActive = true;
 
     public controllerComm controllerComm;
 
@@ -22,8 +23,12 @@ public class ShipMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()    { 
-        bool isShipActive = controllerComm.isOn();
+    void Update()    {
+        if (ship.isControllerEnabled)
+        {
+            bool isShipActive = controllerComm.isOn();
+        }
+
         if(!isShipActive){
             rb.velocity = rb.velocity * 0.92f;
             return;
