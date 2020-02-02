@@ -476,7 +476,7 @@ GameObject:
   - component: {fileID: 1336528008}
   - component: {fileID: 1336528011}
   m_Layer: 5
-  m_Name: Play
+  m_Name: Quit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -515,7 +515,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -546,7 +546,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1336528011}
-        m_MethodName: StartGame
+        m_MethodName: FinishGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -601,7 +601,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1336528006}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27facb2e56117499fb81180729b76ab9, type: 3}
+  m_Script: {fileID: 11500000, guid: 75ba02fff782444ffbb08e62f8ec77ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1396459575
@@ -672,7 +672,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Play
+  m_Text: Quit
 --- !u!222 &1396459578
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -749,16 +749,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u041F\u0440\u0438\u0432\u0435\u0442\u0441\u0442\u0432\u0443\u0435\u043C
-    \u0432 Caffeine fever - \u0432\u0441\u0435\u043B\u0435\u043D\u043D\u043E\u0439,
-    \u0433\u0434\u0435 \u043A\u043E\u0444\u0435 \u043F\u0440\u0435\u0432\u044B\u0448\u0435
-    \u0432\u0441\u0435\u0433\u043E!\n\n\u041D\u0430\u0448\u0430 \u043A\u043E\u0441\u043C\u0438\u0447\u0435\u0441\u043A\u0430\u044F
-    \u0441\u0442\u0430\u043D\u0446\u0438\u044F \u0441\u043B\u043E\u043C\u0430\u043B\u0430\u0441\u044C!!!\n\u0421\u043E\u0431\u0435\u0440\u0438
-    \u0434\u0435\u0442\u0430\u043B\u0438 \u0438 \u043E\u0442\u0432\u0435\u0437\u0438
-    \u043D\u0430 \u0441\u0442\u0430\u043D\u0446\u0438\u044E, \u0447\u0442\u043E\u0431\u044B
-    \u043F\u043E\u0447\u0438\u043D\u0438\u0442\u044C \u0433\u043B\u0430\u0432\u043D\u0443\u044E
-    \u043A\u043E\u0444\u0435\u043C\u0430\u0448\u0438\u043D\u0443 - \u0438\u0441\u0442\u043E\u0447\u043D\u0438\u043A
-    \u043D\u0430\u0448\u0435\u0439 \u0436\u0438\u0437\u043D\u0438. "
+  m_Text: "\u0421\u043F\u0430\u0441\u0438\u0431\u043E \u0437\u0430 \u0438\u0433\u0440\u0443
+    \u0438 \u0434\u0430 \u043F\u0440\u0438\u0431\u0443\u0434\u0435\u0442 \u0441 \u0442\u043E\u0431\u043E\u0439
+    \u043A\u043E\u0444\u0435!"
 --- !u!222 &1701309845
 CanvasRenderer:
   m_ObjectHideFlags: 0

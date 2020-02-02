@@ -31,4 +31,9 @@ public class Coffee : MonoBehaviour
             this.grabbed = true;
         }
     }
+
+    void FixedUpdate()
+    {
+        transform.Rotate(0, 0, 10 * Time.deltaTime);
+    }
 }
