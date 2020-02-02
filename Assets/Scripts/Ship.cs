@@ -15,6 +15,7 @@ public class Ship : MonoBehaviour
     public float accelerationValue = 0;
     public Detail detail;
     public Station station;
+    private bool isShipActive = true;
 
     void Start()
     {
@@ -32,7 +33,11 @@ public class Ship : MonoBehaviour
 
     void Update()
     {
-        bool isShipActive = controller.isOn();
+        if (isControllerEnabled)
+        {
+            bool isShipActive = controller.isOn();
+        }
+
         if(!isShipActive){
             accelerationValue = 0;
             return;
