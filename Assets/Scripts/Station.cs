@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Station : MonoBehaviour
 {
@@ -35,6 +36,8 @@ public class Station : MonoBehaviour
         coffee1.Show();
         coffee2.Show();
         coffee3.Show();
+
+        SceneManager.LoadScene(3);
     }
 
     public bool IsSetFull()
