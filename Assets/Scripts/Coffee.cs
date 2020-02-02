@@ -34,6 +34,6 @@ public class Coffee : MonoBehaviour
 
     void FixedUpdate()
     {
-        transform.Rotate(0, 0, 10 * Time.deltaTime);
+        transform.Rotate(0, 0, 50 * Time.deltaTime);
     }
 }
