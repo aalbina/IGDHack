@@ -22,8 +22,7 @@ public class ShipMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    { 
+    void Update()    { 
         bool isShipActive = controllerComm.isOn();
         if(!isShipActive){
             rb.velocity = rb.velocity * 0.92f;
