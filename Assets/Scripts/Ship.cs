@@ -26,7 +26,7 @@ public class Ship : MonoBehaviour
     {
         if (this.IsDetailGrabbed())
         {
-            this.detail.transform.position = this.transform.position + this.transform.forward * 2;
+            this.detail.transform.position = this.transform.position + this.transform.forward * 2.5f;
         }
 
     }
@@ -37,7 +37,6 @@ public class Ship : MonoBehaviour
         {
             bool isShipActive = controller.isOn();
         }
-
         if(!isShipActive){
             accelerationValue = 0;
             return;

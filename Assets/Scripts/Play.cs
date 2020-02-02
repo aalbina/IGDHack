@@ -8,4 +8,8 @@ public class Play : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
+    public void Lose()
+    {
+        SceneManager.LoadScene(2);
+    }
 }
