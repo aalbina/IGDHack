@@ -1,18 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.ComponentModel;
 using System.IO.Ports;
+using System;
 public class controllerComm : MonoBehaviour
 {
     // Start is called before the first frame update
-    SerialPort serialPort = new SerialPort();
-    string data;
+    public SerialController serialController;
     int gasValue;
     int steeringValue;
     bool on;
     bool forward;
     bool init=false;
-    public string comPortName;
     public bool isForward(){
         return this.forward;
     }
@@ -31,41 +31,39 @@ public class controllerComm : MonoBehaviour
         return this.steeringValue;
     }
 
-    void Start()
-    {
-        this.gasValue=0;
-        this.steeringValue=0;
-        serialPort.PortName=this.comPortName;
-        serialPort.BaudRate=115200;
-        serialPort.Open();
-        for(int i=0;i<20;i++){
-            serialPort.ReadTo("\n");
-        }
+    void Start(){
+        
     }
-
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        data=serialPort.ReadTo("\n");
-        //string type=data.Substring(0,2);
-        string value=data.Substring(2);
-        int number=int.Parse(value);
-        if(data[0]=='g'){
-            this.gasValue=number;
-        }
-        else if(data[0]=='s'){
-            this.steeringValue=number;
-        }
-        else if(data[0]=='e'){
-            this.on=(number==1);
-        }
-        else if(data[0]=='r'){//if reverse is 0 - move forward
-            this.forward=(number==0);
-        }        
-    }
-
+    
     public void setFuelLevel(int level){
         string msg="f:"+level.ToString();
-        serialPort.WriteLine(msg);
+        serialController.SendSerialMessage(msg);
+    }
+    
+    void OnMessageArrived(string msg)
+    {          
+        if(on){
+            string value=msg.Substring(2);          
+            int number=int.Parse(value);
+            if(msg[0]=='g'){
+                this.gasValue=number;
+            }
+            else if(msg[0]=='s'){
+                this.steeringValue=number;
+            }
+            else if(msg[0]=='e'){
+                this.on=(number==1);
+            }
+            //if reverse is 0 - move forward
+            else if(msg[0]=='r'){
+                this.forward=(number==0);
+            }
+        } 
+        else if(msg.Contains("e:1")){
+            this.on=true;
+        }
+    }
+    void OnConnectionEvent(){
+
     }
 }
