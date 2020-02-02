@@ -20,7 +20,12 @@ public class ShipMovement : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    { 
+    {
+        if (ship.fuel == 0)
+        {
+            rb.velocity = rb.velocity * 0.92f;
+            return;
+        }
         if (Input.GetKey(KeyCode.S))
         {
             rb.AddForce(-rb.transform.forward * maneuvreSpeed * Time.deltaTime, ForceMode.Force);
@@ -30,13 +35,13 @@ public class ShipMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.D))
         {
-            rb.transform.Rotate(0, 1f, 0);
+            rb.transform.Rotate(0, 1.4f, 0);
             rb.AddForce(rb.transform.right * maneuvreSpeed * Time.deltaTime, ForceMode.Force);
      
         }
         if (Input.GetKey(KeyCode.A))
         {
-            rb.transform.Rotate(0, -1f, 0);
+            rb.transform.Rotate(0, -1.4f, 0);
             rb.AddForce(-rb.transform.right * maneuvreSpeed * Time.deltaTime, ForceMode.Force);
             
         }
